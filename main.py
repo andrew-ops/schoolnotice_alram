@@ -30,7 +30,7 @@ class webdriverManager:
         service = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=service, options=options)
 
-        
+
     def library(self):
         self.driver.get("https://library.hoseo.ac.kr/#/bbs/notice?offset=0&max=200")
         wait = WebDriverWait(self.driver, 10)
@@ -49,7 +49,16 @@ class webdriverManager:
         self.driver.get("https://cando.hoseo.ac.kr/Community/Notice/NoticeList.aspx")
 def main():
     manager = webdriverManager()
-    manager.library()
+    switch = input("1.도서관 2.호서대 홈페이지 3.호서대 포털")
+    if switch == '1':
+        manager.library()
+    elif switch == '2' or switch == '3':
+        manager.main_pg()
+    elif switch == '4':
+        manager.cando()
+    else:
+        print("잘못된 입력입니다.\n 다시 시도해 주세요")
+        main()
 main()
 '''
 def library():
