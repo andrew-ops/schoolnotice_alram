@@ -14,6 +14,10 @@ from typing import List, Dict, Tuple, Optional
 import logging
 from datetime import datetime
 
+def print_elements(elements):
+    for name, link in zip(elements["이름"], elements["링크"]):
+        print(f"이름: {name.text}, 링크: {link}")
+
 class webdriverManager:
     def __init__(self):
         self.driver = None
@@ -39,17 +43,27 @@ class webdriverManager:
             "이름": self.driver.find_elements(By.CLASS_NAME, "ikc-item-title"),
             "링크": [element.get_attribute("href") for element in self.driver.find_elements(By.CLASS_NAME, "ikc-item-title")]
         }
-        for name, link in zip(elements["이름"], elements["링크"]):
-            print(f"이름: {name.text}, 링크: {link}")
+
 
     def main_pg(self):
         self.driver.get("https://www.hoseo.ac.kr/Home//BBSList.mbz?action=MAPP_1708240139&schIdx=0&schCategorycode=CTG_17082400011&schKeytype=subject&schKeyword=&pageIndex=2")
-
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, "board_new")))
+        elements = {
+            "이름": self.driver.find_elements(By.CLASS_NAME, "board-list-title"),
+            "링크": [element.get_attribute("href") for element in self.driver.find_elements(By.CLASS_NAME, "board-list-title")]
+        }
     def cando(self):
         self.driver.get("https://cando.hoseo.ac.kr/Community/Notice/NoticeList.aspx")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.presence_of_element_located((By.ID, "hcTr1")))
+        elements = {
+            "이름": self.driver.find_elements(By.CSS_SELECTOR, "tr[id^='hcTr']") ,
+            "링크": [element.get_attribute("href") for element in self.driver.find_elements(By.CSS_SELECTOR, "tr[id^='hcTr']")]
+            }
 def main():
     manager = webdriverManager()
-    switch = input("1.도서관 2.호서대 홈페이지 3.호서대 포털")
+    switch = input("1.도서관 2.호서대 홈페이지 3.호서대 포털 4.캔두\n원하는 페이지의 번호를 입력하세요:")
     if switch == '1':
         manager.library()
     elif switch == '2' or switch == '3':
