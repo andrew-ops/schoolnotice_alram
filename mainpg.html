@@ -1,0 +1,1228 @@
+<div class="fix-layout">
+		<div id="body" class="ui-type-content">
+			<h2>공지사항</h2>
+			
+
+<script type="text/javaScript" charset="UTF-8">
+//<![CDATA[
+$(document).ready(
+function($) {
+	/** 카테고리 선택 */
+	window.fn_selectCategory = function(categorycode) {
+		
+		getForm().schCategorycode.value = categorycode;
+		formSubmit();
+	};
+
+	/** 등록 */
+	window.fn_insertData = function() {
+		getForm().action = "/Home//BBSWrite.mbz";
+		formSubmit();
+	};
+
+	/** 조회 */
+	window.fn_viewData = function(idx) {
+		getForm().schIdx.value = idx;
+		getForm().action = "/Home//BBSView.mbz";
+		formSubmit();
+	};
+	
+	window.fn_alert = function() {
+		Alert("Information", "자신이 게시한 글만 열람 가능합니다.");
+	}
+	
+	/** 페이지변경(POST) */
+	window.fn_postPage = function(pageIndex) {
+		getForm().pageIndex.value = pageIndex;
+		getForm().action = "/Home//BBSList.mbz";
+		getForm().submit();
+	};
+});
+
+//]]>
+</script>
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+	
+
+
+
+
+
+
+<form id="searchVO" name="form" action="/Home//BBSList.mbz" method="get">
+	<input id="action" name="action" type="hidden" value="MAPP_1708240139">
+	<input id="schIdx" name="schIdx" type="hidden" value="0">
+	<input id="schCategorycode" name="schCategorycode" type="hidden" value="CTG_17082400011">
+
+	
+
+
+
+<div class="ui-page-total-category"><div class="box-0 ui-page-tab" id="tab"><ul class="nav nav-pills nav-red nav-justified co-0">
+
+	
+	
+		 
+		
+			<li class="check on">
+			<a href="javascript:fn_selectCategory('CTG_17082400011');">
+				공지사항
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_23012600105');">
+				ICAN+학기제
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_24050300117');">
+				융합교육공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400012');">
+				학사공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_23120500114');">
+				교직/평생교육사
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400013');">
+				장학공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400014');">
+				사회봉사
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_20012200070');">
+				외부공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_20120400086');">
+				취업공지
+			</a>
+			</li>
+		
+	
+	
+
+	</ul></div>
+	<ul class="nav nav-pills nav-red nav-justified co-0">
+
+	
+	
+		 
+		
+			<li class="check on">
+			<a href="javascript:fn_selectCategory('CTG_17082400011');">
+				공지사항
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_23012600105');">
+				ICAN+학기제
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_24050300117');">
+				융합교육공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400012');">
+				학사공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_23120500114');">
+				교직/평생교육사
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400013');">
+				장학공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_17082400014');">
+				사회봉사
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_20012200070');">
+				외부공지
+			</a>
+			</li>
+		
+	
+	
+
+	
+	
+		 
+		
+			<li>
+			<a href="javascript:fn_selectCategory('CTG_20120400086');">
+				취업공지
+			</a>
+			</li>
+		
+	
+	
+
+	</ul>
+</div>
+
+
+<script>
+if($('.ui-page-total-category .check').length > 0) { 
+	$('.ui-page-total-category .check').addClass('on').parents('li').addClass('on');
+	
+	var item_obj;
+	if($('.ui-page-total-category .check').children('ul').length > 0) { 
+		item_obj = $('.ui-page-total-category .check').children('ul').children('li');
+	} else { 
+		item_obj = $('.ui-page-total-category .check');
+	}
+
+	item_obj.parents('ul').each(function() {
+		var indexing = $(this).parents('ul').length;
+		var dump_data = $(this).addClass("co-"+indexing).clone();
+		dump_data.find('ul').remove();
+		$('.ui-page-total-category').prepend(dump_data);
+		dump_data.wrap("<div class='box-"+indexing+" ui-page-tab' id='tab'></div>")
+	});
+} else { 
+	var dump_data = $('.ui-page-total-category > ul').addClass("co-0").clone();
+	dump_data.find('ul').remove();
+	$('.ui-page-total-category').prepend(dump_data);
+	dump_data.wrap("<div class='box-0 ui-page-tab' id='tab'></div>")
+
+}
+</script>
+
+
+	<div class="ui-board-info">
+		<div class="page-search-box fl-right">
+			
+			
+			<select id="schKeytype" name="schKeytype">
+				<option value="subject" selected="selected">제목</option>
+				
+					<option value="FLD_17082100001">내용</option>
+				
+				
+				<option value="regnm">작성자</option>
+			</select>
+			<input id="schKeyword" name="schKeyword" type="text" value="">
+			<button type="submit" class="ui-btn white">
+				검색
+			</button>
+			<!--
+			
+			
+			
+			-->
+		</div>
+
+		<!-- p class="fl-left not-mo">
+			Total <span>3,488</span>
+		</p-->
+	</div>
+
+	<table id="example1" class="ui-list table table-hover">
+		<colgroup>
+			
+				<col style="width: 7%;" class="pc_view">
+			
+			
+			
+			
+			<col>
+			
+				
+			
+			
+			
+				<col style="width: 14%" class="m_w20">
+			
+			
+				<col style="width: 14%" class="pc_view">
+			
+			
+			
+			
+		</colgroup>
+		<thead>
+			<tr>
+				
+					<th scope="col" class="pc_view">번호</th>
+				
+				
+				
+				<th scope="col">제목</th><!-- 융합교육원_Q&A -->
+				
+					
+				
+				
+				
+					<th scope="col">작성자</th>
+				
+				
+					<th scope="col" class="pc_view">등록일자</th>
+				
+				
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			
+				<tr class="board_new">
+					
+						<td class="pc_view" data-header="번호">3468</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93574');">
+										
+										[대학혁신지원사업] 2025년 대학혁신지원사업 참여학생 사례영상 경진대회 개최
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">대학혁신팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-10-28</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr class="board_new">
+					
+						<td class="pc_view" data-header="번호">3467</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93397');">
+										
+										[에듀테크 교수학습역량지원센터] 2025학년도 2학기 교수법 특강 운영 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">에듀테크교수학습역량지원센터</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-10-17</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3466</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94271');">
+										
+										반도체 후공정(패키징·테스트) 공정기술 전문가 양성 단기과정 교육생 모집
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">패키지기술혁신센터</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-28</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3465</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94267');">
+										
+										2025년 창업중심대학 AI 활용 글로컬 커머스 프로그램 모집 공고
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">창업중심대학사업단</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-28</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3464</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94077');">
+										
+										[산학융합캠퍼스] 2025학년도 동계방학 집중이수제 안내(당진캠퍼스)
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">산학융합학부</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-21</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3463</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94056');">
+										
+										【신규11.20~25】2025학년도 동계방학 [중어권] 단기 어학연수 모집안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-20</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3462</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94019');">
+										
+										[RISE 사업단] 2025년 호서대학교 RISE사업 탄소중립 서포터즈 모집 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">RISE 사업단</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-18</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3461</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('94016');">
+										
+										2025학년도 8차 호서토익 신청안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-18</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3460</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93660');">
+										
+										[에듀테크교수학습역량지원센터] 2025-2학기 [자기성장학습공모전] 운영 안내(기간연장)
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">에듀테크교수학습역량지원센터</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-17</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3459</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93911');">
+										
+										[사전공고] 학칙 시행규칙 외 1건 개정(안)
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">학사팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-12</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3458</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93906');">
+										
+										[국제업무팀] 2025학년도 동계방학 Go Global 중어권 단기연수생 최종선발 결과발표
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-12</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3457</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93873');">
+										
+										[국제업무팀] 2026학년도 1학기 중국 자매대학 교환학생 최종선발 결과안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-11</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3456</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93867');">
+										
+										[차세대디스플레이 혁신융합사업단] COSS+FESTIVAL 코스티벌 개최 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">차세대디스플레이혁신융합사업단</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-11</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3455</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93855');">
+										
+										[국제업무팀] 2025학년도 동계 Go Global 영어권 해외단기 연수생 최종선발 공고
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-10</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3454</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93849');">
+										
+										[취업팀] 면접 스피치 특강 신청 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">창업교육센터</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-10</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3453</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93589');">
+										
+										[공학교육혁신센터] 글로벌 종합설계 동아리 i-CAPS 참여학생 모집(접수연장)
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">공학교육혁신센터</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-10</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3452</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93815');">
+										
+										25-2학기 통학버스 정상운행 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">학생장학팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-07</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3451</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93795');">
+										
+										[RISE사업단] '2025학년도 산학협력페스티벌' 개최 안내
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">RISE 사업단</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-06</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3450</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93598');">
+										
+										[국제업무팀] 2025학년도 동계 Go Global 영어권 해외단기 연수생 선발 공고
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">국제업무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-05</td>
+					
+					
+					
+					
+				
+			
+				</tr><tr>
+					
+						<td class="pc_view" data-header="번호">3449</td>
+					
+					
+					
+					
+					<td class="board-list-title" data-header="제목">
+						
+							
+							
+								
+								
+									<a href="javascript:fn_viewData('93763');">
+										
+										2026년 2월말 퇴직교원 정부포상 후보자 사전공개
+									</a>
+								
+							
+							
+						
+						
+						
+					</td>
+					
+						
+					
+					
+					
+						<td data-header="작성자">교무팀</td>
+					
+					
+						<td class="txt-center pc_view" data-header="등록일자">2025-11-04</td>
+					
+					
+					
+					
+				
+			
+			
+		</tr></tbody>
+	</table>
+
+	<div class="txt-center pageNavi">
+		<a href="#" onclick="fn_postPage(1); return false;">[처음]</a>&nbsp;<a href="#" onclick="fn_postPage(1); return false;">[이전]</a>&nbsp;<a href="#" onclick="fn_postPage(1); return false;">1</a>&nbsp;<strong>2</strong>&nbsp;<a href="#" onclick="fn_postPage(3); return false;">3</a>&nbsp;<a href="#" onclick="fn_postPage(4); return false;">4</a>&nbsp;<a href="#" onclick="fn_postPage(5); return false;">5</a>&nbsp;<a href="#" onclick="fn_postPage(6); return false;">6</a>&nbsp;<a href="#" onclick="fn_postPage(7); return false;">7</a>&nbsp;<a href="#" onclick="fn_postPage(8); return false;">8</a>&nbsp;<a href="#" onclick="fn_postPage(9); return false;">9</a>&nbsp;<a href="#" onclick="fn_postPage(10); return false;">10</a>&nbsp;<a href="#" onclick="fn_postPage(11); return false;">[다음]</a>&nbsp;<a href="#" onclick="fn_postPage(175); return false;">[마지막]</a>&nbsp;
+
+		<input id="pageIndex" name="pageIndex" type="hidden" value="2">
+	</div>
+
+	
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+	<!-- Body(E) -->
+</div>

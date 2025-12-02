@@ -1,0 +1,47 @@
+<tr class="ikc-item ikc-bbslist-notice" ng-repeat="noticeArticle in noticeArticles">
+    <td>
+        <span class="ikc-flexth">번호</span>
+        <span class="ikc-bbs-list-notice">
+            <span>공지</span>
+        </span>
+    </td>
+    <!---->
+    <td class="ikc-contents">
+        <span class="ikc-flexth">제목</span>
+        <!---->
+        <span ng-if="isAnonymousReadable || (!isAnonymousReadable &amp;&amp; isMember)">
+            <!---->
+            <span ng-if="!noticeArticle.isPrivate || (noticeArticle.isPersonal == true &amp;&amp; isMember)">
+                <a ui-sref=".detail({articleId: noticeArticle.id})" class="ikc-item-title" href="#/bbs/notice/7998?offset=0&amp;max=20">
+                    <!---->
+                    <span ng-bind="noticeArticle.title">[전체]《2025-2학기 기말고사》도서관 연장 운영 안내</span>
+                </a>
+                <!---->
+                <!---->
+                <span class="ikc-item-new" ng-if="isNewArticle(noticeArticle.dateCreated)">new</span>
+                <!---->
+                <!---->
+            </span>
+            <!---->
+            <!---->
+        </span>
+        <!---->
+        <!---->
+    </td>
+    <td>
+        <span class="ikc-flexth">게시일자</span>
+        <!---->
+        <!---->
+        <span ng-if="!isShowLastUpdated">2025.11.25</span>
+        <!---->
+    </td>
+    <!---->
+    <!---->
+    <td ng-if="isShowHitCount">
+        <span class="ikc-flexth">조회수</span>
+        <span>191</span>
+    </td>
+    <!---->
+    <!---->
+    <!---->
+</tr>

@@ -1,0 +1,1248 @@
+<html lang="en"><head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="#">
+    <title>호서대학교</title>
+    <script src="//cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- icon ▼▼▼-->
+    <link href="//fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- 학생 기본 CSS ▼▼▼ -->
+    <link href="/css/career/layout.css" rel="stylesheet">
+    <link href="/css/career/common.css" rel="stylesheet">
+    <link href="/css/career/custom.css" rel="stylesheet">
+    <link href="/css/career/gnb.css" rel="stylesheet">
+    <link href="/css/career/mobile.css" rel="stylesheet">
+    <!-- 학생 기본 CSS ▲▲▲ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/dhtml/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZTXP69ZDG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YZTXP69ZDG');
+    </script>
+    <script src="/app/system/hcontrol2019.js?version= 2025-12-01 23:32"></script><script type="text/javascript" src="/dhtml/js/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/dhtml/common.js?v=5"></script>
+    <script>
+        $(function () {
+            $("#MyMapArea").html(hcUrlRequest("/Career/SiteMapView.aspx?mode=myMap"));
+            $("#TopMenuArea").html(hcUrlRequest("/Career/TopMenuView.aspx"));
+            $("#SiteMapArea").html(hcUrlRequest("/Career/SiteMapView.aspx"));
+            $("#MobileMenuArea").html(hcUrlRequest("/Career/MobileMenuView.aspx"));
+            //학생 홈에서는 메뉴 삭제
+            var splitURL = window.location.href.split('/')
+            var locationURL = splitURL[0] + "//" + splitURL[2];
+            if (window.location.href.toLowerCase().indexOf("/career/default.aspx") < 0 && (locationURL +
+                "/career/" != window.location.href.toLowerCase())) {
+                $("#LeftMenuArea").html(hcUrlRequest("/Career/LeftMenuView.aspx?chnn=Career&page=" + document
+                    .location.pathname + "&para=" + document.location.search));
+            }
+
+            //    퀵메뉴 시작 20200303
+            function layerMask() {
+                //화면의 높이와 너비를 구한다.
+                var maskHeight = $(document).height();
+                var maskWidth = $(window).width();
+                //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+                $("#mask").css({
+                    "width": maskWidth,
+                    "height": maskHeight
+                });
+
+                //애니메이션 효과 - 일단 0.5초동안 까맣게 됐다가 80% 불투명도로 간다.
+
+                $("#mask").fadeIn(500);
+                $("#mask").fadeTo("slow", 0.8);
+
+                //컨텐츠내용 띄운다.
+                $(".maskContent").show();
+
+            }
+
+            //클릭시 함수 실행
+            $(".openMask").click(function (e) {
+                e.preventDefault();
+                layerMask();
+            });
+
+            //닫기 버튼을 눌렀을 때
+            $(".maskContent .close2").click(function (e) {
+                //링크 기본동작은 작동하지 않도록 한다.
+                e.preventDefault();
+                $("#mask, .maskContent").hide();
+            });
+
+            //검은 막을 눌렀을 때
+            $("#mask").click(function () {
+                $(this).hide();
+                $(".maskContent").hide();
+            });
+
+            //    모바일 퀵메뉴 끝 20200303
+        });
+
+        function mobileLogout() {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                location.href = '/main/logout.aspx';
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+
+    <!--   모바일 퀵메뉴 시작-->
+    <div id="mask"></div>
+    <div class="maskContent quick_div">
+        <ul class="quick_ul">
+            <li>
+                <span>홈</span>
+                <a href="/Career/Default.aspx" class="text-fff text-center">
+                    <i class="material-icons">home</i>
+                </a>
+            </li>
+            <li>
+                <span>공지사항</span>
+                <a href="/Community/Notice/NoticeList.aspx" class="text-fff text-center">
+                    <i class="material-icons">list</i>
+                </a>
+            </li>
+            <li>
+                <span>상담예약</span>
+                <a href="/Career/Counsel/CounselProfessor.aspx" class="text-fff text-center">
+                    <i class="material-icons">alarm_on</i>
+                </a>
+            </li>
+            <li>
+                <span>컨설팅룸예약</span>
+                <a href="/Community/RoomRv/Default.aspx" class="text-fff text-center bg-warning">
+                    <i class="material-icons">laptop_mac</i>
+                </a>
+            </li>
+            <li>
+                <span>비교과 프로그램 신청</span>
+                <a href="/Career/CareerTask/ProgramList.aspx" class="text-fff text-center">
+                    <i class="material-icons">post_add</i>
+                </a>
+            </li>
+            <li>
+                <span>취업캘린더</span>
+                <a href="/Community/Notice/RecruitCalendar.aspx" class="text-fff text-center">
+                    <i class="material-icons">calendar_today</i>
+                </a>
+            </li>
+
+            <li>
+                <span></span>
+                <a href="" class="close2 text-fff text-center">
+                    <i class="material-icons">close</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <i class="openMask quick_menu text-fff text-center material-icons">subject</i>
+    <!--   모바일 퀵메뉴 끝 20200303-->
+    <!-- 헤더 ▼▼▼-->
+    <div class="top_header">
+        <div id="top">
+            <ul>
+                <li class=""><a href="/default.aspx">MAIN</a></li>
+                <li class=""><a href="/Main/logout.aspx">로그아웃</a></li>
+                <li class=""><a href="/Upload/UserManual/Student_Manual_hoseo.pdf" target="_blank" rel="noopener">사용자가이드</a></li>
+                <li class=""><a href="https://www.hoseo.ac.kr/intro.jsp" target="_blank" rel="noopener">대학 홈페이지</a></li>
+                <li class=""><a href="/Career/images/화면오류_해결_가이드.pdf" target="_blank" rel="noopener">화면오류해결</a></li>
+            </ul>
+        </div>
+        <div class="mobile_menu none">
+            <p class="m_nav m_nav1">
+                <a href="#">
+                    <i class="material-icons" style="">subject</i><i class="material-icons" style="display:none;">close</i>
+                </a>
+            </p>
+            <a class="mb-logo" href="/career/default.aspx">
+                <img src="/Main/img/gnb_logo.svg" alt="logo" style="height: 44px;">
+            </a>
+            <a onclick="mobileLogout()" style="cursor:pointer" class="m-logout">
+                <i class="material-icons">exit_to_app</i>
+            </a>
+        </div>
+        <div class="inner">
+            <a class="block" href="/career/default.aspx">
+                <img src="/Main/img/gnb_logo.svg" alt="logo">
+            </a>
+            <nav class="navbar top-navbar">
+                <div class="pull-right">
+                    <a class="menu-top-a" href="/Career/Default.aspx">마이페이지</a>
+                    <!--  로드맵 메뉴 -->
+                    <div class="menu-top" id="SiteMapArea"><li class=""><div class="nav-item dropdown mega-dropdown"><a class="menu-top-a" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">사이트맵</a><div class="dropdown-menu scale-up-left sitemap"><div class="col-lg-12 p-0"><div class="w30 pull-left w20-step w20-step2"><h3 class=""><a href="/Career/CareerTask/Default.aspx">학습지원 </a></h3><ul class="menu-a"><li><a href="/Career/CareerTask/DLC.aspx ">학습역량진단</a> </li><li><a href="  /Career/Roadmap/HCP.aspx">핵심역량진단</a> </li><li><a href="/Career/CareerTask/NonSubPlan.aspx">비교과활동</a> </li><li><a href=" /Career/CareerTask/ProgramList.aspx">비교과프로그램</a> </li><li><a href=" /Career/Portfolio/TotalPort.aspx">학습역량 포트폴리오</a> </li></ul></div><div class="w30 pull-left w20-step w20-step1"><h3 class=""><a href="/Career/Roadmap/Default.aspx">진로지원 </a></h3><ul class="menu-a"><li><a href="/Career/RoadMap/JTU.aspx">진로적성검사 </a></li><li><a href="/Career/RoadMap/TargetValue.aspx">목표가치선정 </a></li><li><a href="/Career/RoadMap/JobSearch.aspx">목표직업탐색 </a></li><li><a href="/Career/CareerTask/NCS.aspx">직업기초역량진단 </a></li><li><a href="/Career/MyRoadMap/CareerRoadmapDesign.aspx">경력 로드맵</a></li></ul></div><div class="w30 pull-left w20-step w20-step3"><h3 class=""><a href="/Career/Job/Default.aspx">취업지원 </a></h3><ul class="menu-a"><li><a href=" /Career/Job/PPJ.aspx"> 취업준비도진단</a> </li><li><a href=" /Career/Job/ResumeList.aspx"> 이력서 작성</a> </li><li><a href=" /Career/RoadMap/BizTarget.aspx"> 목표기업탐색</a> </li><li><a href=" /Career/CounselNew/Counselor.aspx"> 취업전문가상담</a> </li></ul></div></div><div class="col-lg-12 p-0"><div class="w30 pull-left"><h3 class="m-t-23">상담지원</h3><ul class="menu-a"><li><a href="/Career/Counsel/BasicDefault.aspx">기초조사지</a></li><li><a href="/Career/Counsel/QJP.aspx">대학생활적응검사(진로발달검사)</a></li><li><a href="/Career/Counsel/PAU.aspx">종합심리검사</a></li><li><a href="/Career/Counsel/CounselProfessor.aspx">교수상담</a></li><li><a href="https://counseling.hoseo.ac.kr/Home/Main.mbz">심리전문가상담</a></li><li><a href="/career/roadmap/sta.aspx">대학생 강점검사</a></li></ul></div><div class="w30 pull-left"><h3 class="m-t-23">채용정보</h3><ul class="menu-a"><li><a href="/Career/Job/RecruitList.aspx?tabs=1&amp;outside=1">외부 채용정보</a></li><li><a href="/Recruit/RecruitSchoolList.aspx">학교제공 채용정보</a></li><li><a href="/Recruit/AlbaList.aspx">아르바이트정보</a></li><li><a href="/Recruit/BizList.aspx">기업정보</a></li><li><a href="/Recruit/JobKoreaCalendar.aspx">겁나빠른 공채달력</a></li><li><a href="/Recruit/JobKoreaSinIp.aspx">잡코리아 신입 공채</a></li></ul></div><div class="w30 pull-left"><h3 class="m-t-23"><a href="/Community/Default.aspx">커뮤니티</a></h3><ul class="menu-a"><li><a href="/Community/Notice/NoticeList.aspx">공지사항</a></li><li><a href="/Community/Notice/RecruitCalendar.aspx">캘린더</a></li><li><a href="/Community/QA/FAQList.aspx">FAQ/Q&amp;A</a></li><li><a href="/Community/Notice/Banner.aspx">제휴사이트 바로가기</a></li><li><a href="/Community/Community/CommList.aspx">동아리</a></li></ul></div></div></div></div></li>
+<style>
+
+    .sitemap .w30 {
+    margin: 0 25px;
+    position: relative;
+}
+.pull-left {
+    float: left;
+}
+.w30 {
+    width: 28%;
+}
+</style></div>
+                    <ul class="menu-top d-flex" id="Program">
+                        <li class=" dropdown">
+                            <a class="menu-top-a" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                비교과프로그램 <i class="fas fa-angle-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu scale-up-left dropdown-menu-header">
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=1">학습법/학습공동체</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=2">특강·워크숍</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=3">공모전</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=4">글쓰기</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=5">심리상담</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=7">취·창업</a></li>
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=6">진로</a></li>
+
+                                <li><a class="dropdown-item" href="/Career/CareerTask/ProgramList.aspx?select_tab=my">내 프로그램</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="menu-top d-flex" id="TopMenuArea"><li class=""><a class="menu-top-a" href="/Career/Counsel/CounselProfessor.aspx">상담지원</a><ul class="dropdown-menu scale-up-left dropdown-menu-header"><li><a href="/Career/Counsel/BasicDefault.aspx">기초조사지</a></li><li><a href="/Career/Counsel/QJP.aspx">대학생활적응검사(진로발달검사)</a></li><li><a href="/Career/Counsel/PAU.aspx">종합심리검사</a></li><li><a href="/Career/Counsel/CounselProfessor.aspx">교수상담</a></li><li><a href="https://counseling.hoseo.ac.kr/Home/Main.mbz">심리전문가상담</a></li><li><a href="/career/roadmap/sta.aspx">대학생 강점검사</a></li></ul></li><li class=""><a class="menu-top-a" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">채용정보<i class="fas fa-angle-down"></i></a><ul class="dropdown-menu scale-up-left dropdown-menu-header"><li><a href="/Career/Job/RecruitList.aspx?tabs=1&amp;outside=1">외부 채용정보</a></li><li><a href="/Recruit/RecruitSchoolList.aspx">학교제공 채용정보</a></li><li><a href="/Recruit/AlbaList.aspx">아르바이트정보</a></li><li><a href="/Recruit/BizList.aspx">기업정보</a></li><li><a href="/Recruit/JobKoreaCalendar.aspx">겁나빠른 공채달력</a></li><li><a href="/Recruit/JobKoreaSinIp.aspx">잡코리아 신입 공채</a></li></ul></li><li class=""><a class="menu-top-a" href="/Community/Default.aspx" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티<i class="fas fa-angle-down"></i></a><ul class="dropdown-menu scale-up-left dropdown-menu-header"><li><a href="/Community/Notice/NoticeList.aspx">공지사항</a></li><li><a href="/Community/Notice/RecruitCalendar.aspx">캘린더</a></li><li><a href="/Community/QA/FAQList.aspx">FAQ/Q&amp;A</a></li><li><a href="/Community/Notice/Banner.aspx">제휴사이트 바로가기</a></li><li><a href="/Community/Community/CommList.aspx">동아리</a></li></ul></li></div>
+                    <div class="menu-top" id="MobileMenuArea"><div class="t_all_menu" style="display:none"><ul class="card-body"><li class="depth1"><h3 href="#">    <i class="material-icons">donut_large</i>    <span>마이로드맵</span><i class="ti-angle-down"></i></h3><div class="depth2" style="display: none;"><h5 class="depth2-h5"><p class="depth2-p-1"><a href="/Career/RoadMap/Default.aspx"><span>진로설계 로드맵</span></a></p><i class="depth2-p-1-icon ti-angle-down"></i></h5><div style="display: none;"><p><a href="/Career/RoadMap/JTU.aspx">진로적성검사</a></p><p><a href="/Career/RoadMap/JobSearch.aspx">목표직업탐색</a></p><p><a href="/Career/CareerTask/NCS.aspx">직업기초역량진단</a></p><p><a href="/Career/RoadMap/TargetValue.aspx">목표가치선정</a></p></div><h5 class="depth2-h5"><p class="depth2-p-1"><a href="/Career/CareerTask/Default.aspx"><span>역량개발 로드맵</span></a></p><i class="depth2-p-1-icon ti-angle-down"></i></h5><div style="display: none;"><p><a href="/Career/CareerTask/NonSubPlan.aspx">역량계획</a></p><p><a href="/Career/CareerTask/ProgramList.aspx">역량수행</a></p><p><a href="/Career/CareerTask/CareerRoadmap.aspx">역량성찰</a></p></div><h5 class="depth2-h5"><p class="depth2-p-1"><a href="/Career/Job/Default.aspx"><span>실전취업 로드맵</span></a></p><i class="depth2-p-1-icon ti-angle-down"></i></h5><div style="display: none;"><p><a href="/Career/RoadMap/BizTarget.aspx">목표기업탐색</a></p><p><a href="/Career/Job/RecruitList.aspx?tabs=1&amp;outside=1">외부 채용정보</a></p><p><a href="/Recruit/RecruitSchoolList.aspx">학교제공 채용정보</a></p><p><a href="/Career/Job/ResumeList.aspx">이력서 작성</a></p><p><a href="/Career/Job/DataChart.aspx">취업빅데이터분석</a></p></div><h5 class="depth2-h5"><p class="depth2-p-1"><a href="/Career/MyRoadMap/GradeCareerRoadMap.aspx">나의 로드맵</a></p><i class="depth2-p-1-icon ti-angle-down"></i></h5><div style="display: none;"><p><a href="/Career/MyRoadMap/GradeCareerRoadMap.aspx">학년별 로드맵</a></p><p><a href="/Career/MyRoadMap/CareerRoadmapDesign.aspx">경력로드맵</a></p></div></div></li><li class="depth1"><h3>    <i class="material-icons">create</i>    <span>진단실시</span><i class="ti-angle-down"></i></h3><div class="depth2" style="display: none;"><p><a href="/Career/BLA/BLA.aspx">기초학습능력진단</a></p></div></li><li class="depth1"><h3>    <i class="material-icons">supervisor_account</i>    <span>상담예약</span><i class="ti-angle-down"></i></h3><div class="depth2" style="display: none;"></div></li><li class="depth1"><h3 href="#" class="active_color_mobile">    <i class="material-icons">card_travel</i>    <span onclick="location.href=''">취업정보</span><i class="ti-angle-down"></i></h3><div class="depth2" style="display: none;"><p><a href="/Recruit/Info.aspx">부서소개</a></p><p><a href="/Recruit/BoardList.aspx?bid=3001">취업 가이드</a></p><p><a href="/Recruit/BoardList.aspx?bid=3000">취업 동영상</a></p></div></li><li class="depth1"><h3 href="#">    <i class="material-icons">speaker_notes</i>    <span onclick="location.href='/Community/Default.aspx'">커뮤니티</span><i class="ti-angle-down"></i></h3><div class="depth2" style="display: none;"><p><a href="/Community/Notice/NoticeList.aspx">공지사항</a></p><p><a href="/Community/Notice/RecruitCalendar.aspx">캘린더</a></p><p><a href="/Community/Community/CommList.aspx">동아리</a></p><p><a href="/Community/Notice/Banner.aspx">제휴사이트 바로가기</a></p><p><a href="/Community/QA/FAQList.aspx">FAQ/Q&amp;A</a></p></div></li></ul></div>
+
+
+
+</div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="width1 d-flex">
+            <div class="" id="gnb">
+                <ul class="gnbUl d-flex width1 j-sb">
+
+                    <li class="liMenu">
+                        <a href="/Career/CareerTask/Default.aspx" class="">학습지원</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Career/CareerTask/DLC.aspx">학습역량진단</a></li>
+                            <li> <a href="/Career/Roadmap/HCP.aspx">핵심역량진단</a></li>
+                            <li> <a href="/Career/CareerTask/NonSubPlan.aspx">비교과 활동</a></li>
+                            <li> <a href="/Career/CareerTask/ProgramList.aspx">비교과프로그램</a></li>
+                            <li> <a href="/Career/Portfolio/TotalPort.aspx">학습역량 포트폴리오</a></li>
+                        </ul>
+                    </li>
+                    <li class="liMenu liMenuFirst">
+                        <a href="/Career/Roadmap/Default.aspx" class="">진로지원</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Career/RoadMap/JTU.aspx">진로적성검사</a></li>
+                            <li> <a href="/Career/RoadMap/TargetValue.aspx">목표가치선정</a></li>
+                            <li> <a href="/Career/RoadMap/JobSearch.aspx">목표직업탐색</a></li>
+                            <li> <a href="/Career/CareerTask/NCS.aspx">직업기초역량진단</a></li>
+                            <li> <a href="/Career/MyRoadMap/CareerRoadmapDesign.aspx">경력로드맵</a></li>
+                        </ul>
+                    </li>
+                    <li class="liMenu">
+                        <a href="/Career/Job/Default.aspx" class="">취업지원</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Career/Job/PPJ.aspx">취업준비도진단</a></li>
+                            <li> <a href="/Career/Job/ResumeList.aspx">이력서 작성</a></li>
+                            <li> <a href="/Career/RoadMap/BizTarget.aspx">목표기업탐색</a></li>
+                            <li> <a href="/Career/CounselNew/Counselor.aspx">취업전문가상담</a></li>
+                        </ul>
+                    </li>
+                    <li class="liMenu">
+                        <a href="/Career/Counsel/BasicDefault.aspx" class="">상담지원</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Career/Counsel/BasicDefault.aspx">기초조사지</a></li>
+                            <li> <a href="/Career/Counsel/QJP.aspx">대학생활적응검사(진로발달검사)</a></li>
+                            <li> <a href="/Career/Counsel/PAU.aspx">종합심리검사</a></li>
+                            <li> <a href="/Career/Counsel/CounselProfessor.aspx">교수상담</a></li>
+                            <li> <a href="https://counseling.hoseo.ac.kr/Home/Main.mbz" target="_blank">심리전문가상담</a></li>
+                            <li> <a href="/Career/Counsel/CounselProfessor.aspx">대학생 강점검사 </a></li>
+                        </ul>
+                    </li>
+                    <li class="liMenu">
+                        <a href="/Career/Job/RecruitList.aspx?tabs=1&amp;outside=1" class="">채용정보</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Career/Job/RecruitList.aspx?tabs=1&amp;outside=1">외부 채용정보</a></li>
+                            <li> <a href="/Recruit/RecruitSchoolList.aspx">학교제공 채용정보</a></li>
+                            <li> <a href="/Recruit/AlbaList.aspx">아르바이트정보</a></li>
+                            <li> <a href="/Recruit/BizList.aspx">기업정보</a></li>
+                            <li> <a href="/Recruit/JobKoreaCalendar.aspx">겁나빠른 공채달력</a></li>
+                            <li> <a href="/Recruit/JobKoreaSinIp.aspx">잡코리아 신입 공채</a></li>
+                        </ul>
+                    </li>
+                    <li class="liMenu">
+                        <a href="/Community/Notice/NoticeList.aspx" class="">커뮤니티</a>
+                        <ul class="liMenuInner" style="height: 0px;">
+                            <li> <a href="/Community/Notice/NoticeList.aspx">공지사항</a></li>
+                            <li> <a href="/Community/Notice/RecruitCalendar.aspx">캘린더</a></li>
+                            <li> <a href="/Community/QA/QAList.aspx">FAQ/Q&amp;A</a></li>
+                            <li> <a href="/Community/Community/CommList.aspx">동아리</a></li>
+                            <li><a href="/Community/Notice/Banner.aspx">제휴사이트 바로가기</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="gnb_bg" style="height: 0px;"></div>
+
+
+    </div>
+    
+    <!--   헤더 ▲▲▲-->
+    <section class="page-wrapper">
+        <div class="d-flex gap30">
+            <!--   왼쪽메뉴 불러오기 시작-->
+            <ul id="LeftMenuArea"><div class="accordion"><div class="card text-center card-body m-b-0"><span class="block profile m-t-15 m-b-15" style="background: url()" onclick="openw('/Widget/Career/W_My_Pic.aspx', '600', '300', '프로필 사진');"></span><h4 class="col-lg-12 p-0 f500">신영민(남자)</h4><h6 class="col-lg-12 p-0">컴퓨터공학부 1학년</h6><h6 class="col-lg-12 p-0">누적 마일리지 : 57</h6></div><div class="col-lg-12 p-0 m-t-30 aco3 aco3-2"><div id="test"><a id="test2" href="/Career/CareerTask/Default.aspx"><h4 class="bold">학습지원</h4></a></div><ul class="p-0 col-lg-12"><li><a href="/Career/CareerTask/DLC.aspx">학습역량진단</a></li><li><a href="/Career/Roadmap/HCP.aspx">핵심역량진단</a></li><li><a href="/Career/CareerTask/NonSubPlan.aspx">비교과활동</a></li><li><a href="/Career/CareerTask/ProgramList.aspx" class="active-li">비교과프로그램</a></li> <li><a href="/Career/Portfolio/TotalPort.aspx">E-포트폴리오</a></li></ul></div>
+<style>
+    #hover-text {
+        display: none;
+        background: #455a64;
+        position: absolute;
+        font-size: 13px;
+        width: 400px;
+        z-index: 5000;
+        text-align: center;
+        padding: 2px;
+        line-height: 1.6;
+        left: 128px;
+        top: 2px;
+        color: #fff;
+        border-radius: 2px;
+        border: 1px solid #455a64;
+        font-weight: 300 !important;
+    }
+</style>
+<script>
+    $(function () {
+
+        $('.my-cursor-hover').hover(
+            function () {
+                $("#hover-text").show();
+            },
+            function () {
+                $("#hover-text").hide();
+            }
+        );
+    });
+</script>
+
+
+
+
+</div></ul>
+            <!--   왼쪽메뉴 불러오기 끝-->
+            <div class="flex1 relative">
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+    });
+
+    function goView(pgdx) {
+        window.open("/community/Program/programView.aspx?pgdx=" + pgdx, "보기", "width=900,height=850");
+    }
+
+    function tabSearch(str) {
+        if (str) {
+            $("#select_tab").val(str);
+            $("#_rsDate").val("");
+            $("#_reDate").val("");
+            $("#_edusDate").val("");
+            $("#_edueDate").val("");
+            $("#_Title").val("");
+            $("#_EventType").val(str);
+        }
+        else {
+            $("#select_tab").val("");
+        }
+
+        if ($("#collapse2").attr("class").indexOf("show") == -1) $("#searchCss").val("");
+        else $("#searchCss").val("show");
+
+        form1.action = 'ProgramList.aspx?workcenter=';
+        form1.submit();
+    }
+
+
+    function searchCore() {
+        var checkVal = "";
+        $('input:checkbox[name=searchCoreKeyword]').each(function () {
+            if ($(this).is(':checked')) {
+                if (checkVal.length > 0) checkVal += ",";
+                checkVal += ($(this).val());
+            }
+
+        });
+
+        $("#_pro").val("search");
+
+        form1.submit();
+    }
+
+    function chkbttn(a) {
+        $(".core-link").removeClass(".core-link-active");
+        var tmp = $("#corecareerChk").val();
+        if (tmp.indexOf(a) > -1) {
+            tmp = tmp.replace(a, "");
+        } else {
+            if (tmp) tmp += ",";
+            tmp += a;
+        }
+        $("#corecareerChk").val(tmp);
+        $("#_pro").val("chkBtn");
+        $(this).addClass(".core-link-active");
+
+        form1.submit();
+    }
+
+    function fncSearch() {
+
+        $("#_pro").val("search");
+
+        if ($("#collapse2").attr("class").indexOf("show") == -1) $("#searchCss").val("");
+        else $("#searchCss").val("show");
+
+        form1.action = 'ProgramList.aspx?workcenter=';
+        form1.submit();
+    }
+
+    function RegCancel(pgdx, subnum) {
+        if (confirm('해당 프로그램 신청을 취소하시겠습니까?')) {
+            $("#_pro").val("RegCancel");
+            $("#_pgdx").val(pgdx);
+            $("#_subNum").val(subnum);
+
+            form1.submit();
+            $("#_pgdx").val("");
+            $("#_pro").val("");
+        }
+    }
+
+    function dnAttend() {
+        openw("/Career/CareerTask/ProgramDoNotAttend.aspx?EncPID=B6YbO1yb9Pc2P8JuKb0WSALjWZXGVabuE8zqEz3rDZx&_esDate=" + $("#_esDate").val() + "&_eeDate=" + $("#_eeDate").val(), "800", "350", "불참 이력");
+    }
+
+    function goGapAnalysis() {
+        openw("/GapAnalysis/Program_Gap.aspx", 700, 940, "갭분석보고서")
+    }
+
+    $(document).ready(function () {
+        var currentTop = parseInt($("#btnAi").css("top"));
+
+        $("#btnAi").stop().animate({ "top": $(window).scrollTop() + currentTop + "px" }, 400);
+        $(window).scroll(function () {
+            $("#btnAi").stop().animate({ "top": $(window).scrollTop() + currentTop + "px" }, 400);
+        });
+    });
+</script>
+
+<form method="post" action="./ProgramList.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3Mzk2NjE3ODMPZBYCZg9kFgICBg8WAh4HVmlzaWJsZWhkZFsFefG5WbcTOa5zRap9lRGQ6ix42HjAjsVcut25vu7Z">
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8573A09E">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAe/80gH+JePoTPsXIM7EvIQ/eb89TbtDepbeYaQwruzx7cQuQfakOJ+k1M9bss0wkz2pRXXiMO/Y+O9esPmvdOlh3rFIEhGAn84ol4063hWpyVxTFkA9ivAABOH9Jhz2P5PGMKwyv1oD6sdzWVNmlv0p+5HvWJLo8SVlICakG/n2jc4ZbODtXGBgh69m+a8l3s=">
+</div>
+    <input name="select_tab" type="hidden" id="select_tab">
+    <input name="searchCss" type="hidden" id="searchCss">
+    <input name="corecareerChk" type="hidden" id="corecareerChk">
+    <input name="_pro" type="hidden" id="_pro">
+    <input name="_pgdx" type="hidden" id="_pgdx">
+    <input name="_subNum" type="hidden" id="_subNum">
+
+    <h6 class="page-navigator text-right">Home &gt; 역량개발 &gt; 비교과프로그램</h6>
+
+    <div class="card mb-card mb-card1">
+        <div class="">
+            <!-- 브리지 대제목 시작-->
+            <div class="page-title-bridge2020 m-b-30">
+                <dl class="col-sm-12">
+                    <dt class="m-b-15">비교과프로그램</dt>
+                    <dd>학교에서는 학생들의 역량을 강화시켜줄 수 있는 다양한 교육 프로그램이 마련되어 있습니다. 나의 취약역량을 강화하기 위해 내가 계획한 프로그램과 나에게 적합한 프로그램을 신청해봅시다!</dd>
+                </dl>
+            </div>
+            <!-- 브리지 대제목 끝-->
+            <div class="inner-body">
+                <!-- ai 뱃지 -->
+                
+                <div class="col-lg-12 m-b-30 p-0">
+                    
+<script type="text/javascript">
+    function goUrl(url) {
+        location.href = url;
+    }
+
+
+</script>  
+<!-- 탭 영역 -->
+
+
+
+    <ul class="col-lg-12 nav nav-tabs customtab3 mWidth" role="tablist">
+        
+        <li class="nav-item text-center cursor"><a class="nav-link active" onclick="goUrl('ProgramList.aspx')">비교과프로그램</a> </li>
+        
+        <li class="nav-item text-center cursor"><a class="nav-link " onclick="goUrl('CareerTask.aspx')">마일리지 현황</a> </li>
+        
+        <li class="nav-item text-center cursor"><a class="nav-link " onclick="goUrl('CareerManage.aspx')">마일리지 신청/관리</a> </li>
+            
+    </ul>
+
+
+<!-- 탭 영역 -->
+
+
+
+
+
+
+
+                </div>
+
+                <!--탭 내용 시작-->
+                <div class="">
+                    <ul class="col-md-12 p-0 nav customtab4 j-center m-b-30" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link text-center active" onclick="tabSearch('all')" data-toggle="tab" href="#c1" role="tab">
+                                <h5>전체</h5>
+                                <h3>139</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('1')" data-toggle="tab" href="#c2" role="tab">
+                                <h5>학습법/학습공동체</h5>
+                                <h3>19</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('2')" data-toggle="tab" href="#c3" role="tab">
+                                <h5>특강·워크숍</h5>
+                                <h3>75</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('3')" data-toggle="tab" href="#c4" role="tab">
+                                <h5>공모전</h5>
+                                <h3>7</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('4')" data-toggle="tab" href="#c5" role="tab">
+                                <h5>글쓰기</h5>
+                                <h3>8</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('7')" data-toggle="tab" href="#c6" role="tab">
+                                <h5>취·창업</h5>
+                                <h3>17</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('6')" data-toggle="tab" href="#c7" role="tab">
+                                <h5>진로</h5>
+                                <h3>2</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-center " onclick="tabSearch('5')" data-toggle="tab" href="#c8" role="tab">
+                                <h5>심리상담</h5>
+                                <h3>11</h3>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item" onclick="tabSearch('my')">
+                            <a class="nav-link text-center " onclick="tabSearch('my')" data-toggle="tab" href="#c6" role="tab">
+                                <h5>내 프로그램</h5>
+                                <h3>5</h3>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- 검색 시작 -->
+                    <div class="alert alert-info col-lg-12 card-body">
+                        <div class="form-group col-lg-12 p-0">
+                            <h4 class="text-info col-lg-12 p-0"><i class="material-icons pull-left" style="line-height: 1.2;">search</i><span class="">비교과 프로그램을 검색해보세요!</span></h4>
+                            <div class="col-md-8 p-0">
+                                <input class="form-control b-t-r-0 b-b-r-0 border-none" type="text" value="" onchange="hcMaxLengthCheck2('_Title',1000)" alt="" title="" name="_Title" id="_Title" placeholder="프로그램명을 입력해주세요.">
+                            </div>
+                            <a href="#" class="toggle-btn-s col-sm-2 btn btn-gray text-center b-t-l-0 b-b-l-0 b-t-r-0 b-b-r-0">상세검색<i class="material-icons pull-right" style="line-height: 0.8;">arrow_drop_down</i></a>
+                            <a id="btnSearch" onclick="fncSearch();" class="col-sm-2 btn btn-info text-fff text-center b-t-l-0 b-b-l-0">검색</a>
+                            <div class="col-lg-12 card-body card m-t-15 m-b-0 border-none toggle-div-s" id="collapse2">
+                                <div class="advanced-search">
+                                    <div class="col-sm-12 p-0">
+                                        <label class="control-label label-bullet1 col-sm-2 p-r-0">년도/학기</label>
+                                        <select class="txt form-control custom-select w40-m" name="year" id="year">
+	<option value="">선택</option>
+	<option value="2025">2025</option>
+	<option value="2024">2024</option>
+	<option value="2023">2023</option>
+	<option value="2022">2022</option>
+	<option value="2021">2021</option>
+	<option value="2020">2020</option>
+	<option value="2019">2019</option>
+	<option value="2018">2018</option>
+
+</select><input type="hidden" name="year_bt0" id="year_bt0" alt="" title="" value="선택">
+
+                                        <select class="txt form-control custom-select w40-m" name="term" id="term">
+	<option value="">선택</option>
+	<option value="1">1학기</option>
+	<option value="2">2학기</option>
+
+</select><input type="hidden" name="term_bt0" id="term_bt0" alt="" title="" value="선택">
+
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <label class="control-label label-bullet1 col-sm-2 p-r-0">프로그램 유형</label>
+                                        <select class="form-control custom-select" name="ProType" id="ProType">
+	<option value="">선택</option>
+	<option value="1">Teamwork</option>
+	<option value="2">Entrepreneurship</option>
+	<option value="3">CreativeThinking</option>
+	<option value="4">Harnessing Resources</option>
+
+</select><input type="hidden" name="ProType_bt0" id="ProType_bt0" alt="" title="" value="선택">
+
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <label class="control-label label-bullet1 col-sm-2 p-r-0">운영부서(학과)</label>
+                                        <select class="txt form-control custom-select" name="DeptRels" id="DeptRels">
+	<option value="">선택</option>
+	<option value="30875">컴퓨터공학부</option>
+
+</select><input type="hidden" name="DeptRels_bt0" id="DeptRels_bt0" alt="" title="" value="선택">
+
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <label class="control-label label-bullet1 col-sm-2 p-r-0">신청기간</label>
+                                        <span><span id="cal__rsDate" style="position:absolute;"></span>
+<input type="text" data-date-format="yyyy-mm-dd" class="txt form-control custom-select hnDatepicker datepicker-input" name="_rsDate" id="_rsDate" value="">
+<script type="text/javascript">$('#_rsDate').datepicker();</script></span>
+                                        ~ 
+                                        <span><span id="cal__reDate" style="position:absolute;"></span>
+<input type="text" data-date-format="yyyy-mm-dd" class="txt form-control custom-select hnDatepicker datepicker-input" name="_reDate" id="_reDate" value="">
+<script type="text/javascript">$('#_reDate').datepicker();</script></span>
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <label class="control-label label-bullet1 col-sm-2 p-r-0">교육기간</label>
+                                        <span><span id="cal__edusDate" style="position:absolute;"></span>
+<input type="text" data-date-format="yyyy-mm-dd" class="txt form-control custom-select hnDatepicker datepicker-input" name="_edusDate" id="_edusDate" value="">
+<script type="text/javascript">$('#_edusDate').datepicker();</script></span>
+                                        ~
+                                        <span><span id="cal__edueDate" style="position:absolute;"></span>
+<input type="text" data-date-format="yyyy-mm-dd" class="txt form-control custom-select hnDatepicker datepicker-input" name="_edueDate" id="_edueDate" value="">
+<script type="text/javascript">$('#_edueDate').datepicker();</script></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--검색창끝-->
+                </div>
+
+
+
+                <!-- 프로그램 리스트 -->
+                <div id="ProgramDiv" class="col-lg-12 p-0">
+                    <h3 id="pcTit" class="col-lg-12 p-0 align-center d-flex j-sb m-t-30 tab_subject2 m-t-0">
+                        <span>전체 프로그램 139건</span>
+                        
+                        <script type="text/javascript">
+                            function selRegstatus(reg) {
+                                const list = document.querySelectorAll("#programZone.tab_container ul li");
+                                list.forEach(function (ele) {
+                                    ele.style.display = "block";
+                                    if (reg && ele.dataset.regstatus != reg) ele.style.display = "none";
+                                })
+                            }
+                        </script>
+                    </h3>
+                    <div></div>
+
+                    <div id="Div1" class="col-lg-12 p-0 mb-p-0">
+                        <div></div>
+                        <div id="programZone" class="tab_container"><ul class="d-flex d-flex-program d-flex-program-list mb-flex-col">
+
+<li style="cursor: pointer;" onclick="javascript:goView('VghsrNhly1PK0NhWx7VkxcHmLohZyagHfD1XTuXpEgd')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl01_finishDate">D - Day</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl01_img"><img src="/upload/programPlan/imgMain/3409_배너_탐독_월간리뷰어_2025.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl01_Title_txt" class="prod1 text-info">[중앙도서관] 월간 리뷰어 - 12월</div>
+            <div id="ctl01_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl01_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-12-01~2025-12-31</span></div>
+            <div id="ctl01_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-01~2025-12-31</span></div>
+            <div class="prod-benefit">
+                <span id="ctl01_corecareer_txt" class="benefit-tag">#비판적 사고</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('eEann01KcznUF4GrBcQo7LfJLwTx2Q78HuEIlQo3fzU')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl02_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl02_img"><img src="/upload/programPlan/imgMain/3681_6시그마-main.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl02_Title_txt" class="prod1 text-info">[취업팀] 2025학년도 6시그마(GB) 자격 취득 교육과정</div>
+            <div id="ctl02_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl02_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-28~2025-12-19</span></div>
+            <div id="ctl02_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-29~2025-12-30</span></div>
+            <div class="prod-benefit">
+                <span id="ctl02_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('77bx2rGyg9n1pMZJCqxOxTkiP79uzVJkilDGMARs5rz')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl03_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl03_img"><img src="/upload/programPlan/imgMain/3340_KakaoTalk_20250213_152545665_01.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl03_Title_txt" class="prod1 text-info">[중앙도서관] 2025 탐독 - 일권완독 챌린지(겨울방학-디 에센셜 헤르만 헤세)</div>
+            <div id="ctl03_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl03_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-25~2025-12-04</span></div>
+            <div id="ctl03_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-24~2026-02-04</span></div>
+            <div class="prod-benefit">
+                <span id="ctl03_corecareer_txt" class="benefit-tag">#자기관리</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('jeLSjQjfzgMBcSFtTaGkdcD74dEQLj6aU9PhJfzEgKr')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl04_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl04_img"><img src="/upload/programPlan/imgMain/3340_KakaoTalk_20250213_152545665_01.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl04_Title_txt" class="prod1 text-info">[중앙도서관] 2025 탐독 -  매일필사 챌린지(겨울방학-윤동주의 하늘과 바람과 별과 시 따라쓰기)</div>
+            <div id="ctl04_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl04_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-25~2025-12-04</span></div>
+            <div id="ctl04_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-24~2026-02-04</span></div>
+            <div class="prod-benefit">
+                <span id="ctl04_corecareer_txt" class="benefit-tag">#자기관리</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('rXZ8MqzHlK5Go1SqPRRXYxdJJ2XRGFOixJ3AS2XFDDD')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl05_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl05_img"><img src="/upload/programPlan/imgMain/3340_KakaoTalk_20250213_152545665_01.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl05_Title_txt" class="prod1 text-info">[중앙도서관] 2025 탐독 -  매일독서 챌린지(겨울방학)</div>
+            <div id="ctl05_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl05_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-25~2025-12-04</span></div>
+            <div id="ctl05_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-24~2026-02-04</span></div>
+            <div class="prod-benefit">
+                <span id="ctl05_corecareer_txt" class="benefit-tag">#자기관리</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('waM9BJ65fadPNyCa6ZmkxBzxN8G0235d4JHfQLZiFAZ')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl06_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl06_img"><img src="/upload/programPlan/imgMain/3680_포스터.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl06_Title_txt" class="prod1 text-info">[취업팀] 무역 기초실무 교육과정</div>
+            <div id="ctl06_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl06_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-24~2025-12-30</span></div>
+            <div id="ctl06_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-11-24~2025-12-30</span></div>
+            <div class="prod-benefit">
+                <span id="ctl06_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('tVz40Lzi9FNPDDArvxroDk6bRbTjjNCPrgmtQi09R8o')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl07_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl07_img"><img src="/upload/programPlan/imgMain/3677_002.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl07_Title_txt" class="prod1 text-info">[공학교육혁신센터]2025 DX와 AX에서 비즈니스 전략</div>
+            <div id="ctl07_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl07_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-19~2025-12-09</span></div>
+            <div id="ctl07_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-11~2025-12-11</span></div>
+            <div class="prod-benefit">
+                <span id="ctl07_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('twXyX6Wd7IixN1LEciMALOodeSWJA5PB9paci2EGMdj')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl08_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl08_img"><img src="/upload/programPlan/imgMain/3675_001.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl08_Title_txt" class="prod1 text-info">[공학교육혁신센터]2025 산업재해예방을 위한 VR 컨텐츠 교육</div>
+            <div id="ctl08_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl08_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-19~2025-12-05</span></div>
+            <div id="ctl08_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-22~2025-12-24</span></div>
+            <div class="prod-benefit">
+                <span id="ctl08_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('coxHY0ewsjqyc7wmLlyaKzuV5NFjbbrQcRbDBlmm57s')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl09_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl09_img"><img src="/upload/programPlan/imgMain/3668_251117호서대_포스터(1).jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl09_Title_txt" class="prod1 text-info">[취업팀] 학생성공을 향한 맞춤형 원데이 취업 캠프</div>
+            <div id="ctl09_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl09_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-17~2025-12-12</span></div>
+            <div id="ctl09_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-19~2025-12-19</span></div>
+            <div class="prod-benefit">
+                <span id="ctl09_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('C0KxrCy80FB7mfyM6w0kk6YYMUHx9hfv6fvRdjexFDo')">
+    <div class="prod-list prod-list-end">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-white">
+                    <span name="finishDate" id="ctl10_finishDate">마감</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl10_img"><img src="/upload/programPlan/imgMain/3666_CanDo시스템 공지 이미지-001.png" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl10_Title_txt" class="prod1 text-info">글로벌 종합설계 동아리 i-CAPS</div>
+            <div id="ctl10_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl10_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-14~2025-11-17</span></div>
+            <div id="ctl10_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2026-02-02~2026-08-28</span></div>
+            <div class="prod-benefit">
+                <span id="ctl10_corecareer_txt" class="benefit-tag">#창의적 문제해결</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('kTP5Cvm0Net2SdM8LMllgEYfYnAvFuBZQWF7y89QRDg')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl11_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl11_img"><img src="/career/img/img.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl11_Title_txt" class="prod1 text-info">[취업팀] 미리캔버스와 AI를 활용한 홍보 콘텐츠 제작</div>
+            <div id="ctl11_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl11_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-17~2025-12-22</span></div>
+            <div id="ctl11_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-29~2025-12-29</span></div>
+            <div class="prod-benefit">
+                <span id="ctl11_corecareer_txt" class="benefit-tag">#정보기술활용</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('ZovvxV8l1O0QzW4yDWTnD5uhB1wlEbPWUlOxfHzIo6f')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl12_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl12_img"><img src="/upload/programPlan/imgMain/3663_정보관리사 실무-자격증 교육 CanDo S.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl12_Title_txt" class="prod1 text-info">국가공인 ERP 인사 정보관리사 자격증·실무 과정 교육</div>
+            <div id="ctl12_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl12_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-13~2025-12-26</span></div>
+            <div id="ctl12_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2026-01-05~2026-01-15</span></div>
+            <div class="prod-benefit">
+                <span id="ctl12_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('tP0eat4QrClAzpJIwUGDzu58ogUsk9zxKdAcoownJLb')">
+    <div class="prod-list prod-list-end">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-white">
+                    <span name="finishDate" id="ctl13_finishDate">마감</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl13_img"><img src="/upload/programPlan/imgMain/3661_2025년 2학기 ISO 품질경영 포스터 s .jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl13_Title_txt" class="prod1 text-info">[취업팀] ISO국제심사원 품질경영 9001 교육 프로그램</div>
+            <div id="ctl13_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl13_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-13~2025-11-24</span></div>
+            <div id="ctl13_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-12-22~2025-12-24</span></div>
+            <div class="prod-benefit">
+                <span id="ctl13_corecareer_txt" class="benefit-tag">#전문성</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('geDpKP1tHA1YCNOxOhB9NrywiTKQ8ogrvcFvuqopiHc')">
+    <div class="prod-list ">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-danger">
+                    <span name="finishDate" id="ctl14_finishDate">진행중</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl14_img"><img src="/upload/programPlan/imgMain/3656_ADSP 포스터 최종본.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl14_Title_txt" class="prod1 text-info">[취업팀] ADsP(데이터분석 준전문가) 과정</div>
+            <div id="ctl14_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl14_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-11-17~2025-12-19</span></div>
+            <div id="ctl14_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2026-01-05~2026-01-14</span></div>
+            <div class="prod-benefit">
+                <span id="ctl14_corecareer_txt" class="benefit-tag">#정보기술활용</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<li style="cursor: pointer;" onclick="javascript:goView('CdMEeJ5HhL1HvvWHTccrC56fv5pasXK3bVlKcn8vJpT')">
+    <div class="prod-list prod-list-end">
+        <div class="img-box">
+            <div class="img-box-tag">
+                <span class="label label-white">
+                    <span name="finishDate" id="ctl15_finishDate">마감</span>
+                </span>
+                
+            </div>
+            <span name="img" id="ctl15_img"><img src="/career/img/img.jpg" alt="프로그램이미지" style="" onerror="this.onerror=null;this.src='/upload/programplan/ImgMain/noImg.jpg'"></span>
+        </div>
+        <div class="info-box">
+            <div id="ctl15_Title_txt" class="prod1 text-info">[카리타스상담센터] 2025-2학기 캠퍼스 로드맵</div>
+            <div id="ctl15_deptrels_txt" class="prod2-1"></div>
+            <div id="ctl15_DateTime_txt" class="prod2"><span>신청</span><span class="text-000 bold">2025-10-21~2025-11-06</span></div>
+            <div id="ctl15_eduArea" class="prod2"><span>교육</span><span class="text-000 bold">2025-11-12~2025-12-03</span></div>
+            <div class="prod-benefit">
+                <span id="ctl15_corecareer_txt" class="benefit-tag">#자기관리</span>
+                
+            </div>
+        </div>
+    </div>
+</li>
+</ul></div>
+                        <footer class="col-lg-12 p-0 m-t-30">
+                            <div id="PageData1" class="PageArea">
+	<div class="col-lg-12 p-0 ">
+	<div class="col-md-3 p-0"><label>Total 139</label></div>
+	<div class="col-md-9 text-right">
+	<ul class="pagination justify-content-center">
+	<li class="active page-item"><a class="page-link">1</a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=2', 'Widget1_List','form1')" class="page-link">2</a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=3', 'Widget1_List','form1')" class="page-link">3</a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=4', 'Widget1_List','form1')" class="page-link">4</a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=5', 'Widget1_List','form1')" class="page-link">5</a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=6', 'Widget1_List','form1')" class="page-link"><i class="ti-angle-right"></i></a></li>
+<li class="page-item"><a onclick="hcSubmit('/Career/CareerTask/ProgramList.aspx?rp=10', 'Widget1_List','form1')" class="page-link" title=""><i class="ti-angle-double-right"></i></a></li>
+
+	</ul>
+	</div>
+	</div>
+
+</div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</div>
+</div>
+</section><div class="datepicker dropdown-menu"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">12월 2025</th><th class="next">›</th></tr><tr><th class="dow">일</th><th class="dow">월</th><th class="dow">화</th><th class="dow">수</th><th class="dow">목</th><th class="dow">금</th><th class="dow">토</th></tr></thead><tbody><tr><td class="day  old">30</td><td class="day  active">1</td><td class="day ">2</td><td class="day ">3</td><td class="day ">4</td><td class="day ">5</td><td class="day ">6</td></tr><tr><td class="day ">7</td><td class="day ">8</td><td class="day ">9</td><td class="day ">10</td><td class="day ">11</td><td class="day ">12</td><td class="day ">13</td></tr><tr><td class="day ">14</td><td class="day ">15</td><td class="day ">16</td><td class="day ">17</td><td class="day ">18</td><td class="day ">19</td><td class="day ">20</td></tr><tr><td class="day ">21</td><td class="day ">22</td><td class="day ">23</td><td class="day ">24</td><td class="day ">25</td><td class="day ">26</td><td class="day ">27</td></tr><tr><td class="day ">28</td><td class="day ">29</td><td class="day ">30</td><td class="day ">31</td><td class="day  new">1</td><td class="day  new">2</td><td class="day  new">3</td></tr><tr><td class="day  new">4</td><td class="day  new">5</td><td class="day  new">6</td><td class="day  new">7</td><td class="day  new">8</td><td class="day  new">9</td><td class="day  new">10</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2025</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="month">1월</span><span class="month">2월</span><span class="month">3월</span><span class="month">4월</span><span class="month">5월</span><span class="month">6월</span><span class="month">7월</span><span class="month">8월</span><span class="month">9월</span><span class="month">10월</span><span class="month">11월</span><span class="month active">12월</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2020-2029</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year old">2030</span></td></tr></tbody></table></div></div><div class="datepicker dropdown-menu"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">12월 2025</th><th class="next">›</th></tr><tr><th class="dow">일</th><th class="dow">월</th><th class="dow">화</th><th class="dow">수</th><th class="dow">목</th><th class="dow">금</th><th class="dow">토</th></tr></thead><tbody><tr><td class="day  old">30</td><td class="day  active">1</td><td class="day ">2</td><td class="day ">3</td><td class="day ">4</td><td class="day ">5</td><td class="day ">6</td></tr><tr><td class="day ">7</td><td class="day ">8</td><td class="day ">9</td><td class="day ">10</td><td class="day ">11</td><td class="day ">12</td><td class="day ">13</td></tr><tr><td class="day ">14</td><td class="day ">15</td><td class="day ">16</td><td class="day ">17</td><td class="day ">18</td><td class="day ">19</td><td class="day ">20</td></tr><tr><td class="day ">21</td><td class="day ">22</td><td class="day ">23</td><td class="day ">24</td><td class="day ">25</td><td class="day ">26</td><td class="day ">27</td></tr><tr><td class="day ">28</td><td class="day ">29</td><td class="day ">30</td><td class="day ">31</td><td class="day  new">1</td><td class="day  new">2</td><td class="day  new">3</td></tr><tr><td class="day  new">4</td><td class="day  new">5</td><td class="day  new">6</td><td class="day  new">7</td><td class="day  new">8</td><td class="day  new">9</td><td class="day  new">10</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2025</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="month">1월</span><span class="month">2월</span><span class="month">3월</span><span class="month">4월</span><span class="month">5월</span><span class="month">6월</span><span class="month">7월</span><span class="month">8월</span><span class="month">9월</span><span class="month">10월</span><span class="month">11월</span><span class="month active">12월</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2020-2029</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year old">2030</span></td></tr></tbody></table></div></div><div class="datepicker dropdown-menu"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">12월 2025</th><th class="next">›</th></tr><tr><th class="dow">일</th><th class="dow">월</th><th class="dow">화</th><th class="dow">수</th><th class="dow">목</th><th class="dow">금</th><th class="dow">토</th></tr></thead><tbody><tr><td class="day  old">30</td><td class="day  active">1</td><td class="day ">2</td><td class="day ">3</td><td class="day ">4</td><td class="day ">5</td><td class="day ">6</td></tr><tr><td class="day ">7</td><td class="day ">8</td><td class="day ">9</td><td class="day ">10</td><td class="day ">11</td><td class="day ">12</td><td class="day ">13</td></tr><tr><td class="day ">14</td><td class="day ">15</td><td class="day ">16</td><td class="day ">17</td><td class="day ">18</td><td class="day ">19</td><td class="day ">20</td></tr><tr><td class="day ">21</td><td class="day ">22</td><td class="day ">23</td><td class="day ">24</td><td class="day ">25</td><td class="day ">26</td><td class="day ">27</td></tr><tr><td class="day ">28</td><td class="day ">29</td><td class="day ">30</td><td class="day ">31</td><td class="day  new">1</td><td class="day  new">2</td><td class="day  new">3</td></tr><tr><td class="day  new">4</td><td class="day  new">5</td><td class="day  new">6</td><td class="day  new">7</td><td class="day  new">8</td><td class="day  new">9</td><td class="day  new">10</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2025</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="month">1월</span><span class="month">2월</span><span class="month">3월</span><span class="month">4월</span><span class="month">5월</span><span class="month">6월</span><span class="month">7월</span><span class="month">8월</span><span class="month">9월</span><span class="month">10월</span><span class="month">11월</span><span class="month active">12월</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2020-2029</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year old">2030</span></td></tr></tbody></table></div></div><div class="datepicker dropdown-menu"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">12월 2025</th><th class="next">›</th></tr><tr><th class="dow">일</th><th class="dow">월</th><th class="dow">화</th><th class="dow">수</th><th class="dow">목</th><th class="dow">금</th><th class="dow">토</th></tr></thead><tbody><tr><td class="day  old">30</td><td class="day  active">1</td><td class="day ">2</td><td class="day ">3</td><td class="day ">4</td><td class="day ">5</td><td class="day ">6</td></tr><tr><td class="day ">7</td><td class="day ">8</td><td class="day ">9</td><td class="day ">10</td><td class="day ">11</td><td class="day ">12</td><td class="day ">13</td></tr><tr><td class="day ">14</td><td class="day ">15</td><td class="day ">16</td><td class="day ">17</td><td class="day ">18</td><td class="day ">19</td><td class="day ">20</td></tr><tr><td class="day ">21</td><td class="day ">22</td><td class="day ">23</td><td class="day ">24</td><td class="day ">25</td><td class="day ">26</td><td class="day ">27</td></tr><tr><td class="day ">28</td><td class="day ">29</td><td class="day ">30</td><td class="day ">31</td><td class="day  new">1</td><td class="day  new">2</td><td class="day  new">3</td></tr><tr><td class="day  new">4</td><td class="day  new">5</td><td class="day  new">6</td><td class="day  new">7</td><td class="day  new">8</td><td class="day  new">9</td><td class="day  new">10</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2025</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="month">1월</span><span class="month">2월</span><span class="month">3월</span><span class="month">4월</span><span class="month">5월</span><span class="month">6월</span><span class="month">7월</span><span class="month">8월</span><span class="month">9월</span><span class="month">10월</span><span class="month">11월</span><span class="month active">12월</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2020-2029</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year old">2030</span></td></tr></tbody></table></div></div>
+<!-- 모달창 JS ▼▼▼ -->
+<div class="modal fade" id="modalFrameWork" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-info" id="Modal_Title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+            </div>
+            <div id="Modal_Content" class="col-lg-12 p-0"></div>
+        </div>
+    </div>
+</div>
+<!-- 모달창 ▲▲▲ -->
+
+<!-- 학생 기본 JS ▼▼▼ -->
+<script src="/dhtml/js/2019/bootstrap.min.js"></script>
+<script src="/dhtml/js/2019/2019js.js"></script>
+<!-- 학생 기본 JS ▲▲▲ -->
+
+<div id="quickMenuArea">
+<script type="text/javascript">
+    // $(document).ready(function () {
+    //     var currentTop = parseInt($("#quick_M").css("top"));
+
+    //     $("#quick_M").stop().animate({ "top": $(window).scrollTop() + currentTop + "px" }, 400);
+    //     $(window).scroll(function () {
+    //         $("#quick_M").stop().animate({ "top": $(window).scrollTop() + currentTop + "px" }, 400);
+    //     });
+    // });
+
+	function goApp() {
+        openw('/M/TeacherApp.aspx', '570', '550', '');
+    }
+
+    function rPost() {
+        window.open('', "targetPostFrom"); //url없이 타겟만 지정한 후 폼 전송
+        rPostForm.submit(); // 새 창을 띄운 후에 폼을 전송
+    }
+    // 맨위로가기
+    const btn_top = document.querySelector(".btn_top");
+    function scroll_top(event) {
+        event.preventDefault();
+        window.scrollTo(0, 0);
+    }
+    btn_top.addEventListener("click", scroll_top);
+
+
+</script>
+<form id="rPostForm" name="rPostForm" target="targetPostFrom" method="post" action="http://u.huno.kr/Testing/Default.aspx">
+    <input name="quick_campus_cd" type="hidden" id="quick_campus_cd" value="9771">
+    <input name="quick_campus_nm" type="hidden" id="quick_campus_nm" value="AFE07250D2D95F1019052DA149D8A0D8">
+    <input name="quick_pid" type="hidden" id="quick_pid" value="4369A3BEE1961205E4A7739EB9DC1DC3">
+    <input name="quick_pn" type="hidden" id="quick_pn" value="4AB613DCE4A0F6BC71F5EDC53F2228CC">    
+</form>
+
+<div id="quick_M">
+        <p class="bg-52 text-fff text-center f600 p-t-5 p-b-5 ft15">Quick Menu</p>
+        <div class="Q_body p-t-5 p-b-5 p-l-15 p-r-15">
+            <ul>
+                <li>
+                    <a href="/Community/Notice/NoticeList.aspx" target="_blank">
+                        <i class="ft20 material-icons-outlined">
+                            campaign
+                        </i>
+                        <span class="ft14 f500">공지사항</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Career/CounselNew/Counselor.aspx" target="_blank">
+                        <i class="ft20 material-icons-outlined">how_to_reg</i>
+                        <span class="ft14 f500">상담예약</span></a>
+                    </li>
+                    <li>
+                    <a href="/Recruit/JobKoreaCalendar.aspx" target="_blank">
+                        <i class="ft20 material-icons-outlined">
+                            calendar_today
+                        </i> <span class="ft14 f500">공채달력</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Career/CareerTask/ProgramList.aspx" target="_blank">
+                        <i class="ft20 material-icons-outlined">
+                            border_color
+                        </i>
+                        <span class="ft14 f500">비교과프로그램</span></a>
+                </li>
+                <li>
+                    <a href="/Career/GuidePage/main.html" target="_blank">
+                        <i class="ft20 material-icons-outlined">
+                            help_outline
+                        </i>
+                        <span class="ft14 f500">사용자 가이드</span></a>
+                </li>
+                <li class="capus_ON  ">
+                    <a onclick="goApp()" style="cursor:pointer;">
+                        <i class="ft20 material-icons-outlined">
+                            stay_current_portrait
+                        </i>
+                        <span class="ft14 f500">마이캠퍼스</span></a>
+                </li>
+                <li>
+                    <a href="/Career/Itta.aspx" target="_blank">
+                       <img style="width:100%;" src="/Upload/Main/Banner/Itta.jpeg" alt="협력배너"></a>
+                </li>
+                <div id="banner">
+                    
+                    <p><a href="http://lms.gg.go.kr/hoseo/home.do" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2032_20250805.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://www.smba.go.kr" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2015_20151216.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://www.korcham.net" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2014_20151216.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://www.hrdkorea.or.kr" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2013_20151216.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://www.moel.go.kr" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2012_20151216.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://www.work.go.kr" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban2011_20151216.png" alt="협력배너"></a></p>
+                    
+                    <p><a href="http://job.cleaneye.go.kr" target="_blank"><img style="width:100%;" src="/Upload/Main/Banner/ban1005_20191120.png" alt="협력배너"></a></p>
+                    
+                </div>
+            </ul></div>
+        
+
+        <a class="btn_top d-flex align-center j-center bg-df p-t-5 p-b-5 ft15">
+            <i class="ft20 material-icons-outlined">
+                expand_less
+                </i>
+            <span>TOP</span></a>
+
+</div>
+</div>
+<script type="text/javascript">
+    function getQuickMenu() {
+        $.ajax({
+            url: "/Career/QuickMenu.aspx",
+            cache: false,
+            success: function (data) {
+                if (data != null) {
+                    $("#quickMenuArea").html(data);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //document.write("메뉴 로딩에 실패했습니다.");
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    getQuickMenu();
+</script>
+
+
+</body></html>
