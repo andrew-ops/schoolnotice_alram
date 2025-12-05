@@ -195,103 +195,116 @@ class NoticeScraper:
             "상태": []
         }
         
-        try:
-            # 먼저 도메인 접속 (쿠키 설정 전 필요)
-            self.driver.get("https://cando.hoseo.ac.kr")
-            
-            # 쿠키 설정
-            cookies = load_cando_cookies()
-            for cookie in cookies:
-                try:
-                    self.driver.add_cookie(cookie)
-                except Exception as e:
-                    pass  # 일부 쿠키 실패는 무시
-            
-            import time
-            
-            for page in range(page_start, page_end + 1):
-                try:
-                    # 쿠키 적용 후 프로그램 리스트 페이지 접속
-                    self.driver.get(f"https://cando.hoseo.ac.kr/Career/CareerTask/ProgramList.aspx?rp={page}")
-                    wait = WebDriverWait(self.driver, 15)
+        import time
+        max_retries = 3
+        
+        for retry in range(max_retries):
+            try:
+                # 먼저 도메인 접속 (쿠키 설정 전 필요)
+                self.driver.get("https://cando.hoseo.ac.kr")
+                time.sleep(1)
                 
-                    # prod-list 요소 대기
-                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".prod-list")))
-                    
-                    time.sleep(2)  # 추가 대기
-                    
-                    # prod-list 카드 형태로 크롤링
-                    program_cards = self.driver.find_elements(By.CSS_SELECTOR, ".prod-list")
-                    print(f"[INFO] 캔두 페이지 {page}: {len(program_cards)}건 발견")
-                    
-                    for card in program_cards:
-                        try:
-                            # 제목: prod1 text-info 클래스
-                            title_elem = card.find_element(By.CSS_SELECTOR, ".prod1.text-info, [id$='_Title_txt']")
-                            title = title_elem.text.strip()
-                            
-                            # 링크: 카드 내 a 태그 또는 onclick
-                            link = "https://cando.hoseo.ac.kr/Career/CareerTask/ProgramList.aspx"
-                            try:
-                                link_elem = card.find_element(By.TAG_NAME, "a")
-                                href = link_elem.get_attribute("href")
-                                if href and href != "#":
-                                    link = href
-                            except:
-                                pass
-                            
-                            # 날짜: DateTime_txt 클래스에서 신청 기간 추출
-                            date = "날짜 없음"
-                            try:
-                                date_elem = card.find_element(By.CSS_SELECTOR, "[id$='_DateTime_txt'], .prod2")
-                                date_text = date_elem.text.strip()
-                                # "신청2025-12-01~2025-12-31" 형태에서 날짜 추출
-                                date_match = re.search(r'(\d{4}-\d{2}-\d{2})', date_text)
-                                if date_match:
-                                    date = date_match.group(1)
-                            except:
-                                pass
-                            
-                            # 상태: 마감 또는 진행중
-                            status = "진행중"
-                            try:
-                                # finishDate 또는 label-white 클래스에서 상태 추출
-                                status_elem = card.find_element(By.CSS_SELECTOR, "[name='finishDate'], [id$='_finishDate'], .label.label-white span")
-                                status_text = status_elem.text.strip()
-                                if "마감" in status_text:
-                                    status = "마감"
-                                elif status_text:
-                                    status = status_text
-                            except:
-                                # 다른 방법으로 시도
-                                try:
-                                    labels = card.find_elements(By.CSS_SELECTOR, ".label")
-                                    for label in labels:
-                                        label_text = label.text.strip()
-                                        if "마감" in label_text:
-                                            status = "마감"
-                                            break
-                                        elif "진행" in label_text:
-                                            status = "진행중"
-                                            break
-                                except:
-                                    pass
-                            
-                            if title and len(title) > 1:
-                                all_elements["제목"].append(title)
-                                all_elements["링크"].append(link)
-                                all_elements["날짜"].append(date)
-                                all_elements["상태"].append(status)
-                                
-                        except Exception as e:
-                            continue
-                            
-                except Exception as e:
-                    print(f"[ERROR] 캔두 페이지 {page} 크롤링 실패: {e}")
-                    continue
+                # 쿠키 설정
+                cookies = load_cando_cookies()
+                for cookie in cookies:
+                    try:
+                        self.driver.add_cookie(cookie)
+                    except Exception as e:
+                        pass  # 일부 쿠키 실패는 무시
+                
+                break  # 성공하면 루프 탈출
+            except Exception as e:
+                error_msg = str(e).lower()
+                if "net::err_name_not_resolved" in error_msg or "name_not_resolved" in error_msg:
+                    print(f"[WARNING] 캔두 DNS 해석 실패, 재시도 중... ({retry + 1}/{max_retries})")
+                    time.sleep(3)
+                    self._setup_driver()  # 드라이버 재생성
+                    if retry == max_retries - 1:
+                        print(f"[ERROR] 캔두 접속 실패: 네트워크 오류")
+                        return all_elements
+                else:
+                    raise e
+        
+        for page in range(page_start, page_end + 1):
+            try:
+                # 쿠키 적용 후 프로그램 리스트 페이지 접속
+                self.driver.get(f"https://cando.hoseo.ac.kr/Career/CareerTask/ProgramList.aspx?rp={page}")
+                wait = WebDriverWait(self.driver, 15)
+            
+                # prod-list 요소 대기
+                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".prod-list")))
+                
+                time.sleep(2)  # 추가 대기
+                
+                # prod-list 카드 형태로 크롤링
+                program_cards = self.driver.find_elements(By.CSS_SELECTOR, ".prod-list")
+                print(f"[INFO] 캔두 페이지 {page}: {len(program_cards)}건 발견")
+                
+                for card in program_cards:
+                    try:
+                        # 제목: prod1 text-info 클래스
+                        title_elem = card.find_element(By.CSS_SELECTOR, ".prod1.text-info, [id$='_Title_txt']")
+                        title = title_elem.text.strip()
                         
-        except Exception as e:
-            print(f"[ERROR] 캔두 크롤링 실패: {e}")
+                        # 링크: 카드 내 a 태그 또는 onclick
+                        link = "https://cando.hoseo.ac.kr/Career/CareerTask/ProgramList.aspx"
+                        try:
+                            link_elem = card.find_element(By.TAG_NAME, "a")
+                            href = link_elem.get_attribute("href")
+                            if href and href != "#":
+                                link = href
+                        except:
+                            pass
+                        
+                        # 날짜: DateTime_txt 클래스에서 신청 기간 추출
+                        date = "날짜 없음"
+                        try:
+                            date_elem = card.find_element(By.CSS_SELECTOR, "[id$='_DateTime_txt'], .prod2")
+                            date_text = date_elem.text.strip()
+                            # "신청2025-12-01~2025-12-31" 형태에서 날짜 추출
+                            date_match = re.search(r'(\d{4}-\d{2}-\d{2})', date_text)
+                            if date_match:
+                                date = date_match.group(1)
+                        except:
+                            pass
+                        
+                        # 상태: 마감 또는 진행중
+                        status = "진행중"
+                        try:
+                            # finishDate 또는 label-white 클래스에서 상태 추출
+                            status_elem = card.find_element(By.CSS_SELECTOR, "[name='finishDate'], [id$='_finishDate'], .label.label-white span")
+                            status_text = status_elem.text.strip()
+                            if "마감" in status_text:
+                                status = "마감"
+                            elif status_text:
+                                status = status_text
+                        except:
+                            # 다른 방법으로 시도
+                            try:
+                                labels = card.find_elements(By.CSS_SELECTOR, ".label")
+                                for label in labels:
+                                    label_text = label.text.strip()
+                                    if "마감" in label_text:
+                                        status = "마감"
+                                        break
+                                    elif "진행" in label_text:
+                                        status = "진행중"
+                                        break
+                            except:
+                                pass
+                        
+                        if title and len(title) > 1:
+                            all_elements["제목"].append(title)
+                            all_elements["링크"].append(link)
+                            all_elements["날짜"].append(date)
+                            all_elements["상태"].append(status)
+                            
+                    except Exception as e:
+                        continue
+                        
+            except Exception as e:
+                print(f"[ERROR] 캔두 페이지 {page} 크롤링 실패: {e}")
+                continue
         
         return all_elements
 
