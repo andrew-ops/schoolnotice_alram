@@ -8,3 +8,4 @@ dist/
 build/
 *.env
 candocookie.env
+cache.json
